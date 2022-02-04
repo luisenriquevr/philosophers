@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:09:47 by lvarela           #+#    #+#             */
-/*   Updated: 2021/12/30 14:07:23 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:12:28 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ long int	ft_atoi(const char *str)
 		num = num * 10 + (*str - 48);
 		str++;
 	}
-	return (num * neg);
+	return ((int)(num * neg));
 }

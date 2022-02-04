@@ -6,7 +6,7 @@
 #    By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/30 14:09:09 by lvarela           #+#    #+#              #
-#    Updated: 2022/01/02 13:47:48 by lvarela          ###   ########.fr        #
+#    Updated: 2022/02/04 10:25:25 by lvarela          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC		=	gcc
 
 NAME	=	philosophers
 
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra -pthread
 
 SRCS	=	srcs/parsing.c \
 			srcs/init.c \
