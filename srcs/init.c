@@ -6,15 +6,16 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 13:46:31 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/04 13:24:02 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:30:25 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-void	*routine()
+void	*routine(void *i)
 {
-	printf("One more philosopher\n");
+	int *x = (int *)i;
+	printf("Philosopher %d is ON\n", x[0] + 1);
 	return NULL;
 }
 
@@ -27,7 +28,7 @@ int	mutex_init(t_data *data)
 	
 	while (++i < data->parameters[NUM_OF_PHILOS])
 	{
-		if (pthread_create(&philo[i].thread, NULL, &routine, NULL) != 0)
+		if (pthread_create(&philo[i].thread, NULL, &routine, &i) != 0)
 			return (throw_error("Error whith thread\n", 1));
 		if (pthread_join(philo[i].thread, NULL))
 			return (throw_error("Error with join\n", 1));

@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/04 13:26:18 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/04 18:00:23 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@ typedef	struct			s_philosopher
 {
 	int					id;
 	int					x_ate;
-	int					left_fork_id;
-	int					right_fork_id;
-	long long			t_last_meal;
-	struct s_rules		*rules;
 	pthread_t			thread;
 }						t_philosopher;
 
