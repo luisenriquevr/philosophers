@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/04 18:00:23 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/08 10:05:48 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,30 @@
 # define TIME_TO_SLEEP 3
 # define NUM_OF_TIMES_TO_EAT 4
 
+typedef struct 			data
+{
+	int					*parameters;
+	pthread_mutex_t		*fork_mutex;
+	pthread_mutex_t		access_mutex;
+	pthread_mutex_t		print_mutex;
+	int					eaters;
+	int					died;
+}						t_data;
+
 typedef	struct			s_philosopher
 {
 	int					id;
-	int					x_ate;
+	int					eaten;
+	int					die;
+	t_data				*data;
+	int					left_fork;
+	int					right_fork;
 	pthread_t			thread;
 }						t_philosopher;
 
-typedef struct data
-{
-	int					*parameters;
-	t_philosopher		*philosopher;
-}	t_data;
-
-
 int						parsing(t_data *data, int argc, char **argv);
 int						throw_error(char *error, int ret);
-int						all_init(t_data *data);
+int						initializing(t_data *data, t_philosopher **philo);
 
 long int				ft_atoi(const char *str);
 void					ft_putstr_fd(char *s, int fd);

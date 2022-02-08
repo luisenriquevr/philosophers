@@ -6,7 +6,7 @@
 #    By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/30 14:09:09 by lvarela           #+#    #+#              #
-#    Updated: 2022/02/04 10:25:25 by lvarela          ###   ########.fr        #
+#    Updated: 2022/02/07 16:35:32 by lvarela          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ NAME	=	philosophers
 FLAGS	=	-Wall -Werror -Wextra -pthread
 
 SRCS	=	srcs/parsing.c \
-			srcs/init.c \
+			srcs/initializing.c \
+			srcs/philosophing.c \
 			lib/ft_atoi.c \
 			lib/ft_putstr_fd.c \
 			philosophers.c \
