@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/08 10:05:48 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/08 11:15:32 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct 			data
 	pthread_mutex_t		print_mutex;
 	int					eaters;
 	int					died;
+	long long			time;
 }						t_data;
 
 typedef	struct			s_philosopher
@@ -47,7 +48,7 @@ typedef	struct			s_philosopher
 int						parsing(t_data *data, int argc, char **argv);
 int						throw_error(char *error, int ret);
 int						initializing(t_data *data, t_philosopher **philo);
-
+int						philosophing(t_philosopher *philosopher);
 long int				ft_atoi(const char *str);
 void					ft_putstr_fd(char *s, int fd);
 

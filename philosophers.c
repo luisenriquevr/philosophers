@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:31:07 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/08 10:23:46 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/08 12:11:37 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int	main(int argc, char **argv)
 	{
 		if (initializing(&data, &philosophers))
 			return (throw_error("Error: Threads initialization not possible\n", 1));
-		//if (playing(&data, &philosophers))
-		//	return (throw_error("Error: An error has ocurred\n", 1));
+		if (philosophing(philosophers))
+			return (throw_error("Error: An error has ocurred\n", 1));
 	}
-	printf("data->died = %d\n", data.died);
-	printf("philosofer[1]->data.died = %d\n", philosophers[1].data->died);
 	removing(&data);
 	return (EXIT_SUCCESS);
 }
