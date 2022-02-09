@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:31:07 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/08 12:47:53 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 10:16:58 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	t_philosopher	*philosophers = NULL;
 	
 	if (argc != 5 && argc != 6)
-		return (throw_error("Error: Number of arguments is incorrected\n"));
+		return (throw_error("Error: Incorrect number of arguments\n"));
 	if (parsing(&data, argc, argv))
 		throw_error("Error: Error with arguments\n");
 	else
