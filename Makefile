@@ -6,7 +6,7 @@
 #    By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/30 14:09:09 by lvarela           #+#    #+#              #
-#    Updated: 2022/02/08 17:52:32 by lvarela          ###   ########.fr        #
+#    Updated: 2022/02/09 14:57:47 by lvarela          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,12 @@ SRCS	=	srcs/parsing.c \
 			srcs/initializing.c \
 			srcs/philosophing.c \
 			srcs/utils.c \
-			lib/ft_atoi.c \
 			philosophers.c \
 			
 
 OBJS	=	$(SRCS:.c=.o)
 
-RM		=	rm -f
+RM		=	rm -rvf
 
 $(NAME) : $(OBJS)
 		$(CC) $(OBJS) $(FLAGS) -o $(NAME)

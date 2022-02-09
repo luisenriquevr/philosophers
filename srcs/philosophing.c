@@ -6,28 +6,71 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 10:20:21 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 15:58:36 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-void	sumatorie(t_data *data)
+void	all_eaten_check(t_philosopher *philosopher, t_data *data)
 {
-	pthread_mutex_lock(&data->access_mutex);
-	data->died++;
-	pthread_mutex_unlock(&data->access_mutex);
+	int	i;
+
+	i = -1;
+
+	while (data->parameters[NUM_OF_TIMES_TO_EAT] > 0
+		&& i < data->parameters[NUM_OF_PHILOS]
+		&& philosopher[i].eaten >= data->parameters[NUM_OF_TIMES_TO_EAT])
+		i++;
+	if (i == data->parameters[NUM_OF_PHILOS])
+		data->all_eaten = 1;
 }
 
-void	sumatorie0(t_data *data)
+void	eat_time(t_philosopher *philosopher)
 {
-	pthread_mutex_lock(&data->access_mutex);
-	data->died = data->died + 10;
-	pthread_mutex_unlock(&data->access_mutex);
+	t_data	*data;
+
+	data = philosopher->data;
+	pthread_mutex_lock(&data->fork_mutex[philosopher->left_fork]);
+	print(LEFT_FORK, philosopher->id, data);
+	pthread_mutex_lock(&data->fork_mutex[philosopher->right_fork]);
+	print(RIGHT_FORK, philosopher->id, data);
+	print(EATING, philosopher->id, data);
+	philosopher->t_last_meal = timing();
+	sleep_time(data->parameters[TIME_TO_SLEEP], data);
+	philosopher->eaten++;
+	pthread_mutex_unlock(&data->fork_mutex[philosopher->left_fork]);
+	pthread_mutex_unlock(&data->fork_mutex[philosopher->right_fork]);
 }
 
+void	dead_check(t_philosopher *philosopher)
+{
+	t_data		*data;
+	int			i;
 
-void	*routine(void *philo)
+	data = philosopher->data;
+	while (!data->all_eaten)
+	{
+		i = -1;
+		while (++i < data->parameters[NUM_OF_PHILOS] && !data->died)
+		{
+			pthread_mutex_lock(&data->access_mutex);
+			if ((timing() - philosopher[i].t_last_meal)
+				>= data->parameters[TIME_TO_DIE])
+			{
+				print(DIE, philosopher[i].id, data);
+				data->died = 1;
+			}
+			pthread_mutex_unlock(&data->access_mutex);
+			usleep(100);
+		}
+		if (data->died)
+			break ;
+		all_eaten_check(philosopher, data);
+	}
+}
+
+void	routine(void *philo)
 {
 	t_philosopher	*philosopher;
 	t_data			*data;
@@ -35,15 +78,16 @@ void	*routine(void *philo)
 	philosopher = (t_philosopher *)philo;
 	data = philosopher->data;
 	if (philosopher->id % 2 == 0)
-	{
 		usleep(1000);
-		sumatorie(data);
-		print(EATING, philosopher->id, data);
-	}
-	else
-		sumatorie0(data);
+	while (!data->died)
+	{
+		eat_time(philosopher);
+		if (data->all_eaten)
+			break ;
+		print(SLEEPING, philosopher->id, data);
+		sleep_time(data->parameters[TIME_TO_SLEEP], data);
 		print(THINKING, philosopher->id, data);
-	return (NULL);
+	}
 }
 
 int	philosophing(t_philosopher *philosopher)
@@ -51,16 +95,14 @@ int	philosophing(t_philosopher *philosopher)
 	int	i;
 
 	i = -1;
+	philosopher->data->timestamp = timing();
 	while (++i < philosopher->data->parameters[NUM_OF_PHILOS])
 	{
-		philosopher->data->timestamp = timing();
-		if (pthread_create(&(philosopher[i].thread), NULL,
-			&routine, &philosopher[i]))
-			return (1);
-		if (pthread_join(philosopher[i].thread, NULL))
+		if (pthread_create(&philosopher[i].thread, NULL,
+				(void *)routine, &philosopher[i]))
 			return (1);
 		philosopher[i].t_last_meal = timing();
 	}
-	printf("Data->died = %d", philosopher->data->died);
+	dead_check(philosopher);
 	return (0);
 }

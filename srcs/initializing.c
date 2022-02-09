@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 13:46:31 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/08 10:24:36 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 15:47:29 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	data_fill(t_data *data)
 {
 	data->fork_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 		* data->parameters[NUM_OF_PHILOS]);
-	data->eaters = 0;
+	data->all_eaten = 0;
 	data->died = 0;
 	if (pthread_mutex_init(&data->access_mutex, NULL)
 		|| pthread_mutex_init(&data->print_mutex, NULL))
@@ -33,10 +33,10 @@ int	philosophers_fill(t_philosopher *philo, t_data *data, int i)
 	if (pthread_mutex_init(&data->fork_mutex[i], NULL))
 		return (1);
 	philo->left_fork = i;
-	if (i == data->parameters[NUM_OF_PHILOS] - 1) // Esta condicion la ponemos por si es el ultimo philo
+	if (i == data->parameters[NUM_OF_PHILOS] - 1)
 		philo->right_fork = 0;
 	else
-		philo->left_fork = i + 1;
+		philo->right_fork = i + 1;
 	return (0);
 }
 

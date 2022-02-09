@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/08 17:54:10 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 16:01:01 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define EATING "is eating"
 # define SLEEPING "is sleeping"
 # define THINKING "is thinking"
+# define DIE "died"
+# define LEFT_FORK "has taken left fork"
+# define RIGHT_FORK "has taken right fork"
+# define FORK "has tacken a fork"
 
 typedef struct 			data
 {
@@ -33,7 +37,7 @@ typedef struct 			data
 	pthread_mutex_t		*fork_mutex;
 	pthread_mutex_t		access_mutex;
 	pthread_mutex_t		print_mutex;
-	int					eaters;
+	int					all_eaten;
 	int					died;
 	long long			timestamp;
 }						t_data;
@@ -54,6 +58,7 @@ int						parsing(t_data *data, int argc, char **argv);
 int						initializing(t_data *data, t_philosopher **philo);
 int						throw_error(char *error);
 int						philosophing(t_philosopher *philosopher);
+void					sleep_time(long long time, t_data *data);
 long long				timing(void);
 void					print(char *msg, int philosopher, t_data *data);
 long int				ft_atoi(const char *str);
