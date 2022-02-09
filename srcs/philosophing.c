@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 21:36:07 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 21:40:59 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*routine(void *philo)
 {
 	t_philosopher	*philosopher;
 	t_data			*data;
-	
+
 	philosopher = (t_philosopher *)philo;
 	data = philosopher->data;
 	if (philosopher->id % 2 == 0)

@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:31:07 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 21:29:27 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 21:40:36 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	joining_destroying(t_data *data, t_philosopher *philosopher)
 
 	i = -1;
 	while (++i < data->parameters[NUM_OF_PHILOS]
-			&& data->parameters[NUM_OF_PHILOS] > 1)
+		&& data->parameters[NUM_OF_PHILOS] > 1)
 	{
 		if (pthread_join(philosopher[i].thread, NULL))
 			return (1);
