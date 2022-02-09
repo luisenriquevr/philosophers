@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 20:29:00 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 21:36:07 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	all_eaten_check(t_philosopher *philosopher, t_data *data)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (data->parameters[NUM_OF_TIMES_TO_EAT] > 0
 		&& i < data->parameters[NUM_OF_PHILOS]
 		&& philosopher[i].eaten >= data->parameters[NUM_OF_TIMES_TO_EAT])

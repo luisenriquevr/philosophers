@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 19:38:41 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 21:25:59 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int						philosophing(t_philosopher *philosopher);
 void					sleep_time(long long time, t_data *data);
 long long				timestamp(void);
 void					print(char *msg, int philosopher, t_data *data);
-long int				ft_atoi(const char *str);
+int						ft_atoi(const char *str);
 
 #endif
