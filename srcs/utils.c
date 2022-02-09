@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:07:20 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 14:52:10 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:25:36 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	print(char *msg, int philosopher, t_data *data)
 {
 	pthread_mutex_lock(&data->print_mutex);
 	if (!data->died)
-		printf("%lli ms %i %s\n", timing() - data->timestamp, philosopher, msg);
+		printf("%lli ms %i %s\n", timestamp() - data->timestamp, philosopher, msg);
 	pthread_mutex_unlock(&data->print_mutex);
 }
 
-long long	timing(void)
+long long	timestamp(void)
 {
 	struct timeval	time;
 	
@@ -64,10 +64,10 @@ void	sleep_time(long long time, t_data *data)
 {
 	long long	i;
 
-	i = timing();
+	i = timestamp();
 	while (!data->died)
 	{
-		if ((i - timing()) >= time)
+		if ((timestamp() - i) >= time)
 			break ;
 		usleep(50);
 	}

@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 13:46:31 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 15:47:29 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:41:11 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 int	data_fill(t_data *data)
 {
 	data->fork_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-		* data->parameters[NUM_OF_PHILOS]);
+			* data->parameters[NUM_OF_PHILOS]);
 	data->all_eaten = 0;
 	data->died = 0;
+	data->timestamp = 0;
 	if (pthread_mutex_init(&data->access_mutex, NULL)
 		|| pthread_mutex_init(&data->print_mutex, NULL))
 		return (1);
@@ -37,6 +38,7 @@ int	philosophers_fill(t_philosopher *philo, t_data *data, int i)
 		philo->right_fork = 0;
 	else
 		philo->right_fork = i + 1;
+	philo->t_last_meal = 0;
 	return (0);
 }
 
@@ -49,7 +51,8 @@ int	initializing(t_data *data, t_philosopher **philosopher)
 	philo = *philosopher;
 	if (data_fill(data))
 		return (1);
-	philo = (t_philosopher *)malloc(sizeof(t_philosopher) * data->parameters[NUM_OF_PHILOS]);
+	philo = (t_philosopher *)malloc(sizeof(t_philosopher)
+			* data->parameters[NUM_OF_PHILOS]);
 	while (++i < data->parameters[NUM_OF_PHILOS])
 		philosophers_fill(&philo[i], data, i);
 	*philosopher = philo;

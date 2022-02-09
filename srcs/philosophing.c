@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 15:58:36 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:29:00 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	all_eaten_check(t_philosopher *philosopher, t_data *data)
 	int	i;
 
 	i = -1;
-
 	while (data->parameters[NUM_OF_TIMES_TO_EAT] > 0
 		&& i < data->parameters[NUM_OF_PHILOS]
 		&& philosopher[i].eaten >= data->parameters[NUM_OF_TIMES_TO_EAT])
@@ -35,9 +34,11 @@ void	eat_time(t_philosopher *philosopher)
 	print(LEFT_FORK, philosopher->id, data);
 	pthread_mutex_lock(&data->fork_mutex[philosopher->right_fork]);
 	print(RIGHT_FORK, philosopher->id, data);
+	pthread_mutex_lock(&data->access_mutex);
 	print(EATING, philosopher->id, data);
-	philosopher->t_last_meal = timing();
-	sleep_time(data->parameters[TIME_TO_SLEEP], data);
+	philosopher->t_last_meal = timestamp();
+	pthread_mutex_unlock(&data->access_mutex);
+	sleep_time(data->parameters[TIME_TO_EAT], data);
 	philosopher->eaten++;
 	pthread_mutex_unlock(&data->fork_mutex[philosopher->left_fork]);
 	pthread_mutex_unlock(&data->fork_mutex[philosopher->right_fork]);
@@ -55,7 +56,7 @@ void	dead_check(t_philosopher *philosopher)
 		while (++i < data->parameters[NUM_OF_PHILOS] && !data->died)
 		{
 			pthread_mutex_lock(&data->access_mutex);
-			if ((timing() - philosopher[i].t_last_meal)
+			if ((timestamp() - philosopher[i].t_last_meal)
 				>= data->parameters[TIME_TO_DIE])
 			{
 				print(DIE, philosopher[i].id, data);
@@ -70,7 +71,7 @@ void	dead_check(t_philosopher *philosopher)
 	}
 }
 
-void	routine(void *philo)
+void	*routine(void *philo)
 {
 	t_philosopher	*philosopher;
 	t_data			*data;
@@ -88,6 +89,7 @@ void	routine(void *philo)
 		sleep_time(data->parameters[TIME_TO_SLEEP], data);
 		print(THINKING, philosopher->id, data);
 	}
+	return (NULL);
 }
 
 int	philosophing(t_philosopher *philosopher)
@@ -95,13 +97,13 @@ int	philosophing(t_philosopher *philosopher)
 	int	i;
 
 	i = -1;
-	philosopher->data->timestamp = timing();
+	philosopher->data->timestamp = timestamp();
 	while (++i < philosopher->data->parameters[NUM_OF_PHILOS])
 	{
-		if (pthread_create(&philosopher[i].thread, NULL,
-				(void *)routine, &philosopher[i]))
+		if (pthread_create(&(philosopher[i].thread), NULL,
+				&routine, &(philosopher[i])))
 			return (1);
-		philosopher[i].t_last_meal = timing();
+		philosopher[i].t_last_meal = timestamp();
 	}
 	dead_check(philosopher);
 	return (0);

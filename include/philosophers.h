@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 16:01:01 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/09 19:38:41 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # define DIE "died"
 # define LEFT_FORK "has taken left fork"
 # define RIGHT_FORK "has taken right fork"
-# define FORK "has tacken a fork"
+# define FORK "has taken a fork"
 
-typedef struct 			data
+typedef struct data
 {
 	int					*parameters;
 	pthread_mutex_t		*fork_mutex;
@@ -42,7 +42,7 @@ typedef struct 			data
 	long long			timestamp;
 }						t_data;
 
-typedef	struct			s_philosopher
+typedef struct s_philosopher
 {
 	int					id;
 	int					eaten;
@@ -59,7 +59,7 @@ int						initializing(t_data *data, t_philosopher **philo);
 int						throw_error(char *error);
 int						philosophing(t_philosopher *philosopher);
 void					sleep_time(long long time, t_data *data);
-long long				timing(void);
+long long				timestamp(void);
 void					print(char *msg, int philosopher, t_data *data);
 long int				ft_atoi(const char *str);
 
