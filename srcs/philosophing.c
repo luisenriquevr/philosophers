@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/10 13:10:45 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/10 14:55:53 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void	all_eaten_check(t_philosopher *philosopher, t_data *data)
 		data->all_eaten = 1;
 }
 
-void	eat_time(t_philosopher *philosopher)
+int	eat_time(t_philosopher *philosopher)
 {
 	t_data	*data;
 
 	data = philosopher->data;
 	pthread_mutex_lock(&data->fork_mutex[philosopher->left_fork]);
 	print(LEFT_FORK, philosopher->id, data);
+	if (data->parameters[NUM_OF_PHILOS] == 1)
+		return (1);
 	pthread_mutex_lock(&data->fork_mutex[philosopher->right_fork]);
 	print(RIGHT_FORK, philosopher->id, data);
 	pthread_mutex_lock(&data->access_mutex);
@@ -42,6 +44,7 @@ void	eat_time(t_philosopher *philosopher)
 	philosopher->eaten++;
 	pthread_mutex_unlock(&data->fork_mutex[philosopher->left_fork]);
 	pthread_mutex_unlock(&data->fork_mutex[philosopher->right_fork]);
+	return (0);
 }
 
 void	dead_check(t_philosopher *philosopher)
@@ -82,7 +85,8 @@ void	*routine(void *philo)
 		usleep(1000);
 	while (!data->died)
 	{
-		eat_time(philosopher);
+		if (eat_time(philosopher))
+			break ;
 		if (data->all_eaten != 0
 			|| philosopher->eaten == data->parameters[NUM_OF_TIMES_TO_EAT])
 			break ;
