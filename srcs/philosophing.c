@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:34:41 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 21:40:59 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/10 13:10:45 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	*routine(void *philo)
 	while (!data->died)
 	{
 		eat_time(philosopher);
-		if (data->all_eaten)
+		if (data->all_eaten != 0
+			|| philosopher->eaten == data->parameters[NUM_OF_TIMES_TO_EAT])
 			break ;
 		print(SLEEPING, philosopher->id, data);
 		sleep_time(data->parameters[TIME_TO_SLEEP], data);

@@ -6,7 +6,7 @@
 /*   By: lvarela <lvarela@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:30:55 by lvarela           #+#    #+#             */
-/*   Updated: 2022/02/09 21:25:59 by lvarela          ###   ########.fr       */
+/*   Updated: 2022/02/10 13:10:35 by lvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <limits.h>
 
 # define NUM_OF_PHILOS 0
 # define TIME_TO_DIE 1
